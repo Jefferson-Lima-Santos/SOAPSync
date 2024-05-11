@@ -1,45 +1,34 @@
 import React from 'react';
-import { Stack, Button, Grid, Paper, Typography } from '@mui/material';
+import { Stack, Paper, Typography } from '@mui/material';
 
 import './styles.css';
 
 const ResultComponent = () => {
     return (
-        <Grid
-            container
-            spacing={2}
+        <Stack
+            width='30vw'
         >
-            <Grid
-                item
-                xs={12}
+            <Paper
+                style={{
+                    padding: '1rem',
+                    textAlign: 'center'
+                }}
             >
-                <Paper
-                    style={{
-                        padding: '1rem',
-                        textAlign: 'center'
-                    }}
+                <Typography
+                    variant='h5'
                 >
-                    <Typography
-                        variant='h5'
-                    >
-                        Resposta da Requisição
-                    </Typography>
-                </Paper>
-            </Grid>
-            <Grid
-                item
-                xs={12}
+                    Resposta da Requisição
+                </Typography>
+            </Paper>
+            <Stack
+                direction='column'
+                spacing={2}
+                justifyContent='center'
             >
-                <Stack
-                    direction='column'
-                    spacing={2}
-                    justifyContent='center'
-                >
-                    Colocar Algo aqui Depois
-                    Talvez colocar o Histórico de requisições/Header
-                </Stack>
-            </Grid>
-        </Grid>
+                Colocar Algo aqui Depois
+                Talvez colocar o Histórico de requisições/Header
+            </Stack>
+        </Stack>
     );
 }
 
