@@ -1,0 +1,20 @@
+
+ {
+    "Methods": [
+    {
+        "name": "Get",
+        "description": "Retorna um recurso específico ou uma coleção de recursos."
+    },
+    {
+        "name": "Post",
+        "description": "Cria um novo recurso."
+    },
+    {
+        "name": "Put",
+        "description": "Atualiza um recurso específico."
+    },
+    {
+        "name": "Delete",
+        "description": "Remove um recurso específico."
+    }
+]}
