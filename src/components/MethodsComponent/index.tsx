@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Stack, Button, Paper, Typography, Tooltip } from '@mui/material';
 import { Info, CheckCircle, AddCircleOutline } from '@mui/icons-material';
 import context from '../../utils/context.json';
+import HeaderTitle from '../HeaderTitle';
 
 
 const MethodsComponent = () => {
@@ -15,18 +16,10 @@ const MethodsComponent = () => {
             position='relative'
             spacing={2}
         >
-            <Paper
-                style={{
-                    padding: '1rem',
-                    textAlign: 'center'
-                }}
-            >
-                <Typography
-                    variant='h5'
-                >
-                    Selecionar Métodos
-                </Typography>
-            </Paper>
+            <HeaderTitle
+                title='Selecionar Métodos'
+                size='h5'
+            />
             <Stack
                 direction='column'
                 spacing={2}
@@ -37,7 +30,7 @@ const MethodsComponent = () => {
                     selectedMethod === method.name ? (
                         <Button
                             key={index}
-                            variant='outlined'
+                            variant='text'
                             color='success'
                             sx={{
                                 justifyContent: 'space-between'
@@ -62,7 +55,7 @@ const MethodsComponent = () => {
                     ) : (
                         <Button
                             key={index}
-                            variant='outlined'
+                            variant='text'
                             color='primary'
                             startIcon={<AddCircleOutline />}
                             sx={{

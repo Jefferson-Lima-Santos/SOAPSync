@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
-import { Stack, Paper, Typography, TextField, IconButton, Checkbox, Button } from '@mui/material';
-import { Send } from '@mui/icons-material';
+import { Stack, TextField, IconButton, Checkbox, Button } from '@mui/material';
+import { AddCircle } from '@mui/icons-material';
 import Editor from '@monaco-editor/react';
+import HeaderTitle from '../HeaderTitle/index';
 
 interface HeaderType {
     key: string;
@@ -60,20 +61,12 @@ const MonacoEditor = () => {
 
     return (
         <Stack
-            minWidth='50vw'
+            width='50vw'
+            height='-webkit-fill-available'
         >
-            <Paper
-                style={{
-                    padding: '1rem',
-                    textAlign: 'center'
-                }}
-            >
-                <Typography
-                    variant='h5'
-                >
-                    Editor
-                </Typography>
-            </Paper>
+            <HeaderTitle
+                title='Editor'
+            />
             <Stack
                 direction='column'
                 spacing={2}
@@ -82,38 +75,33 @@ const MonacoEditor = () => {
                 <Editor
                     height="50vh"
                     width="50vw"
-                    defaultLanguage="javascript"
+                    defaultLanguage="xml"
                     defaultValue='<?xml version="1.0"?>
                     <soap:Envelope xmlns:soap="https://www.w3.org/2003/05/soap-envelope">
-                    </soap:Envelope>'
+                    </soap:Envelope>
+                    </xml>'
+
                     onMount={handleEditorDidMount}
                 />
             </Stack>
             <Stack
                 direction='column'
-                spacing={2}
-                justifyContent='center'
+                spacing={3}
+                justifyContent='flex-start'
                 sx={{
-                    postion: 'relative'
+                    position: 'relative',
+                    height: '-webkit-fill-available'
                 }}
             >
-                <Paper
-                    style={{
-                        padding: '1rem',
-                        textAlign: 'center'
-                    }}
-                >
-                    <Typography
-                        variant='h6'
-                    >
-                        Headers
-                    </Typography>
-                </Paper>
+                <HeaderTitle
+                    title='Headers'
+                    size='h6'
+                />
                 <Stack
-                    direction='column'
-                    spacing={2}
+                    direction='row'
+                    flexWrap='wrap'
                     justifyContent='center'
-                    maxHeight='18vh'
+                    maxHeight='24vh'
                     sx={{
                         overflowY: 'auto'
                     }}
@@ -123,20 +111,27 @@ const MonacoEditor = () => {
                             key={index}
                             direction='row'
                             spacing={2}
-                            justifyContent='center'
+                            sx={{
+                                margin: '0.5rem 0 !important',
+                            }}
                         >
-                            <Checkbox />
+                            <Checkbox
+                                size='small'
+                            />
                             <TextField
                                 fullWidth
-                                variant='standard'
+                                variant='outlined'
+                                size='small'
                                 label='Header Key'
                             />
                             <TextField
                                 fullWidth
-                                variant='standard'
+                                variant='outlined'
+                                size='small'
                                 label='Header Value'
                             />
                             <IconButton
+                                size='small'
                                 onClick={() => handleRemoveHeader(index)}
                             >
                                 X
@@ -150,15 +145,16 @@ const MonacoEditor = () => {
                     justifyContent='flex-start'
                     sx={{
                         position: 'absolute',
-                        bottom: '0'
+                        bottom: '0',
+                        padding: '1rem'
                     }}
                 >
                     <Button
-                        variant='outlined'
+                        variant='contained'
                         color='primary'
                         onClick={handleAddHeader}
                         endIcon={
-                            <Send />
+                            <AddCircle />
                         }
                     >
                         Adicionar Header

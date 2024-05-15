@@ -1,25 +1,17 @@
 import React from 'react';
-import { Stack, Paper, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import './styles.css';
+import HeaderTitle from '../HeaderTitle';
 
 const ResultComponent = () => {
     return (
         <Stack
             width='30vw'
         >
-            <Paper
-                style={{
-                    padding: '1rem',
-                    textAlign: 'center'
-                }}
-            >
-                <Typography
-                    variant='h5'
-                >
-                    Resposta da Requisição
-                </Typography>
-            </Paper>
+            <HeaderTitle
+                title='Resposta da Requisição'
+            />
             <Stack
                 direction='column'
                 spacing={2}
