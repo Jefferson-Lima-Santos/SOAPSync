@@ -23,18 +23,18 @@ const MonacoEditor = () => {
         editorRef.current = editor;
     }
 
-    const handleHeaderChange = (index: number, key: string, value: string) => {
-        const newHeaders = headers.map((header, i) => {
-            if (i === index) {
-                return {
-                    key,
-                    value
-                }
-            }
-            return header;
-        });
-        setHeaders(newHeaders);
-    }
+    // const handleHeaderChange = (index: number, key: string, value: string) => {
+    //     const newHeaders = headers.map((header, i) => {
+    //         if (i === index) {
+    //             return {
+    //                 key,
+    //                 value
+    //             }
+    //         }
+    //         return header;
+    //     });
+    //     setHeaders(newHeaders);
+    // }
 
     const handleAddHeader = () => {
         setHeaders([
@@ -54,15 +54,18 @@ const MonacoEditor = () => {
         setHeaders(newHeaders);
     }
 
-    function showValue() {
-        if (editorRef?.current)
-            alert(editorRef.current.getValue());
-    }
+    // function showValue() {
+    //     if (editorRef?.current)
+    //         alert(editorRef.current.getValue());
+    // }
 
     return (
         <Stack
             width='50vw'
             height='-webkit-fill-available'
+            sx={{
+                backgroundColor: '#090C15',
+            }}
         >
             <HeaderTitle
                 title='Editor'
@@ -117,6 +120,12 @@ const MonacoEditor = () => {
                         >
                             <Checkbox
                                 size='small'
+                                sx={{
+                                  color:'#fff',
+                                  '&.Mui-checked': {
+                                    color: '#fff'
+                                  },
+                                }}
                             />
                             <TextField
                                 fullWidth
@@ -133,6 +142,9 @@ const MonacoEditor = () => {
                             <IconButton
                                 size='small'
                                 onClick={() => handleRemoveHeader(index)}
+                                sx={{
+                                  color:'#fff',
+                                }}
                             >
                                 X
                             </IconButton>

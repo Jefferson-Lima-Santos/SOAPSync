@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Stack, Button, Paper, Typography, Tooltip } from '@mui/material';
 import { Info, CheckCircle, AddCircleOutline } from '@mui/icons-material';
+import TextCard from '../TextCard';
+import { Player } from '@lottiefiles/react-lottie-player';
+import RobotJson from '../../assets/lottie/robot-help.json';
 import context from '../../utils/context.json';
 import HeaderTitle from '../HeaderTitle';
 
@@ -9,7 +12,17 @@ const MethodsComponent = () => {
     const [selectedMethod, setSelectedMethod] = useState('Get');
     const [appConfig] = useState(context);
     const { Methods } = appConfig;
-
+    const infoComponent = () => {
+        return (
+        <Info 
+            color='primary' 
+            sx={{
+                position: 'absolute',
+                right: '1rem',
+                bottom: '1rem'
+            }}
+            />)
+    }
     return (
         <Stack
             minWidth='20vw'
@@ -33,8 +46,8 @@ const MethodsComponent = () => {
                             variant='text'
                             color='success'
                             sx={{
-                                justifyContent: 'space-between'
-
+                                justifyContent: 'space-between',
+                                backgroundColor: '#fff',
                             }}
                             startIcon={
                                 <CheckCircle
@@ -76,21 +89,42 @@ const MethodsComponent = () => {
                     )
                 ))}
             </Stack>
-            <Paper
-                style={{
-                    padding: '1rem 0',
-                    textAlign: 'center',
+            <Stack
+                direction='column'
+                spacing={2}
+                justifyContent='center'
+                padding='0 1rem'
+                sx={{
                     position: 'absolute',
                     bottom: '0',
-                    width: '100%'
                 }}
             >
-                <Typography
-                    variant='h6'
+                <Player
+                    autoplay
+                    loop
+                    src={RobotJson}
+                    style={{width: '70%', height: '70%'}}
                 >
-                    Criado por: <strong>Lucas</strong>
-                </Typography>
-            </Paper>
+                </Player>
+                <TextCard 
+                    htmlText='Caso tenha alguma <strong>dúvida</strong> relacionada aos <strong>métodos</strong>, basta passar o mouse no icone'
+                    Icon={infoComponent}
+                />
+                <Stack
+                    style={{
+                        padding: '1rem 0',
+                        textAlign: 'center',
+                        width: '100%',
+                        color: '#fff'
+                    }}
+                >
+                    <Typography
+                        variant='h6'
+                    >
+                        SOAP <strong>SYNC</strong>
+                    </Typography>
+                </Stack>
+            </Stack>
         </Stack>
     );
 }
