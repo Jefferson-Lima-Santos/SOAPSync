@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
-import { Stack, TextField, IconButton, Checkbox, Button } from '@mui/material';
+import { Stack, TextField, IconButton, Checkbox, Button, Autocomplete } from '@mui/material';
+import { Send } from '@mui/icons-material';
 import { AddCircle } from '@mui/icons-material';
 import Editor from '@monaco-editor/react';
 import HeaderTitle from '../HeaderTitle/index';
+import { context } from '../../context';
 
 interface HeaderType {
     key: string;
@@ -15,9 +17,13 @@ const initialHeader: HeaderType[] = [
         value: ''
     }
 ]
+
+
 const MonacoEditor = () => {
     const editorRef = useRef<any>(null);
     const [headers, setHeaders] = useState<HeaderType[]>(initialHeader);
+    const [selectedApi, setSelectedApi] = useState<{ label: string; url: string } | null>(null);
+
 
     function handleEditorDidMount(editor: any, monaco: any) {
         editorRef.current = editor;
@@ -54,6 +60,41 @@ const MonacoEditor = () => {
         setHeaders(newHeaders);
     }
 
+    const handleSendRequest = async () => {
+        if (!selectedApi) {
+            alert('Please select an API');
+            return;
+        }
+
+        const xmlData = editorRef.current.getValue();
+        const headersObject = headers.reduce((acc, header) => {
+            if (header.key && header.value) {
+                acc[header.key] = header.value;
+            }
+            return acc;
+        }, {});
+
+        try {
+            const response = await fetch(selectedApi.url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/xml',
+                    ...headersObject
+                },
+                body: xmlData
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const responseData = await response.text();
+            console.log('Response:', responseData);
+            // Handle the response as needed
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
     // function showValue() {
     //     if (editorRef?.current)
     //         alert(editorRef.current.getValue());
@@ -63,21 +104,73 @@ const MonacoEditor = () => {
         <Stack
             width='50vw'
             height='-webkit-fill-available'
+            alignItems='center'
             sx={{
-                backgroundColor: '#090C15',
+                backgroundColor: '#090C15'
             }}
         >
             <HeaderTitle
                 title='Editor'
             />
             <Stack
+                direction='row'
+                spacing={2}
+                justifyContent='center'
+                sx={{
+                    backgroundColor: '#FFF',
+                    width: '95%',
+                    padding: '0.5rem',
+                    boxSizing: 'border-box',
+                }}
+            >
+                <Autocomplete
+                    options={context.soapApis}
+                    getOptionLabel={(option) => option.url}
+                    fullWidth
+                    onChange={(event, newValue) => setSelectedApi(newValue)}
+                    renderOption={(props, option) => (
+                        <li {...props}>
+                            {option.label}
+                        </li>
+                    )}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="Select API"
+                            variant="outlined"
+                        />
+                    )}
+                    sx={{
+                        backgroundColor: '#fff',
+                        color: '#000',
+                        borderRadius: '0.5rem',
+                    }}
+                />
+                <Button
+                    variant='contained'
+                    color='primary'
+                    sx={{
+                        marginTop: '1rem'
+                    }}
+                    endIcon={
+                        <Send />
+                    }
+                    onClick={handleSendRequest}
+                >
+                    Enviar
+                </Button>
+            </Stack>
+            <Stack
                 direction='column'
                 spacing={2}
                 justifyContent='center'
+                sx={{
+                    width: '95%',
+                }}
             >
                 <Editor
                     height="50vh"
-                    width="50vw"
+                    width="100%"
                     defaultLanguage="xml"
                     defaultValue='<?xml version="1.0"?>
                     <soap:Envelope xmlns:soap="https://www.w3.org/2003/05/soap-envelope">
@@ -92,6 +185,7 @@ const MonacoEditor = () => {
                 spacing={3}
                 justifyContent='flex-start'
                 sx={{
+                    width: '95%',
                     position: 'relative',
                     height: '-webkit-fill-available'
                 }}
@@ -105,26 +199,30 @@ const MonacoEditor = () => {
                     flexWrap='wrap'
                     justifyContent='center'
                     maxHeight='24vh'
+                    flexGrow={1}
                     sx={{
-                        overflowY: 'auto'
+                        overflowY: 'auto',
+                        backgroundColor: '#FFF',
                     }}
                 >
                     {headers && headers.map((header, index) => (
                         <Stack
                             key={index}
                             direction='row'
+                            alignItems='center'
                             spacing={2}
                             sx={{
                                 margin: '0.5rem 0 !important',
+                                maxHeight: '3rem',
                             }}
                         >
                             <Checkbox
                                 size='small'
                                 sx={{
-                                  color:'#fff',
-                                  '&.Mui-checked': {
-                                    color: '#fff'
-                                  },
+                                    // color: '#fff',
+                                    // '&.Mui-checked': {
+                                    //     color: '#fff'
+                                    // },
                                 }}
                             />
                             <TextField
@@ -142,9 +240,9 @@ const MonacoEditor = () => {
                             <IconButton
                                 size='small'
                                 onClick={() => handleRemoveHeader(index)}
-                                sx={{
-                                  color:'#fff',
-                                }}
+                                // sx={{
+                                //     color: '#fff',
+                                // }}
                             >
                                 X
                             </IconButton>
