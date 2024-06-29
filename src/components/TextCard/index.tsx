@@ -9,14 +9,18 @@ const TextCard = ({ htmlText, Icon }: TextCardProps) => {
     return (
         <Card
             sx={{
-                padding: '1rem',
                 position: 'relative',
+                backgroundColor: 'transparent',
+                padding: '1rem'
             }}
         >
             <Typography
+                border={0}
+                boxShadow={undefined}
+                color='white' fontSize={20}
                 dangerouslySetInnerHTML={{ __html: htmlText }}
             />
-            <Icon/>
+            <Icon />
         </Card>
     );
 }
