@@ -11,7 +11,7 @@ const HeaderTitle = (props: HeaderTitleProps) => {
     return (
         <Stack
             style={{
-                padding: '0.5rem',
+                padding: '1rem',
                 textAlign: 'center',
                 backgroundColor: '#080B13',
             }}
